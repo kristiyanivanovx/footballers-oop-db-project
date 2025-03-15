@@ -13,8 +13,19 @@ public class TeamDTO {
         this.earnings = earnings;
     }
 
-    public int getTeamId() { return teamId; }
-    public String getName() { return name; }
-    public String getDateFound() { return dateFound; }
-    public double getEarnings() { return earnings; }
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDateFound() {
+        return dateFound;
+    }
+
+    public double getEarnings() {
+        return earnings;
+    }
 }

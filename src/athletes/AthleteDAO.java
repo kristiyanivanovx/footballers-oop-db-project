@@ -2,7 +2,10 @@ package athletes;
 
 import database.DatabaseConnection;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +35,9 @@ public class AthleteDAO {
 
     public List<AthleteDTO> searchAthletesByNameAndTeam(String athleteName, String teamName) {
         List<AthleteDTO> athletes = new ArrayList<>();
-        String sql = "SELECT A.AthleteId, A.FirstName, A.LastName, A.Nationality, A.Position, A.Price, A.DateBorn, A.TeamId, T.Name " +
-                "FROM Athletes A JOIN Teams T ON A.TeamId = T.TeamId WHERE A.FirstName=? AND T.Name=?";
+        String sql =
+            "SELECT A.AthleteId, A.FirstName, A.LastName, A.Nationality, A.Position, A.Price, A.DateBorn, A.TeamId, T.Name " +
+            "FROM Athletes A JOIN Teams T ON A.TeamId = T.TeamId WHERE A.FirstName=? AND T.Name=?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, athleteName);
@@ -41,7 +45,8 @@ public class AthleteDAO {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                athletes.add(new AthleteDTO(
+                athletes.add(
+                    new AthleteDTO(
                         resultSet.getInt("AthleteId"),
                         resultSet.getString("FirstName"),
                         resultSet.getString("LastName"),
@@ -51,7 +56,8 @@ public class AthleteDAO {
                         resultSet.getString("DateBorn"),
                         resultSet.getInt("TeamId"),
                         resultSet.getString("Name")
-                ));
+                    )
+                );
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -106,23 +112,26 @@ public class AthleteDAO {
 
     public List<AthleteDTO> getAllAthletes() {
         List<AthleteDTO> athletes = new ArrayList<>();
-        String sql = "SELECT A.AthleteId, A.FirstName, A.LastName, A.Nationality, A.Position, A.Price, A.DateBorn, A.TeamId, T.Name " +
-                "FROM Athletes AS A JOIN Teams AS T ON A.TeamId = T.TeamId";
+        String sql =
+            "SELECT A.AthleteId, A.FirstName, A.LastName, A.Nationality, A.Position, A.Price, A.DateBorn, A.TeamId, T.Name " +
+            "FROM Athletes AS A JOIN Teams AS T ON A.TeamId = T.TeamId";
 
         try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                athletes.add(new AthleteDTO(
-                    resultSet.getInt("AthleteId"),
-                    resultSet.getString("FirstName"),
-                    resultSet.getString("LastName"),
-                    resultSet.getString("Nationality"),
-                    resultSet.getString("Position"),
-                    resultSet.getDouble("Price"),
-                    resultSet.getString("DateBorn"),
-                    resultSet.getInt("TeamId"),
-                    resultSet.getString("Name")
-                ));
+                athletes.add(
+                    new AthleteDTO(
+                        resultSet.getInt("AthleteId"),
+                        resultSet.getString("FirstName"),
+                        resultSet.getString("LastName"),
+                        resultSet.getString("Nationality"),
+                        resultSet.getString("Position"),
+                        resultSet.getDouble("Price"),
+                        resultSet.getString("DateBorn"),
+                        resultSet.getInt("TeamId"),
+                        resultSet.getString("Name")
+                    )
+                );
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

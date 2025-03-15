@@ -1,29 +1,28 @@
-package athletes;
+package matches;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AthleteModel extends AbstractTableModel {
+public class MatchModel extends AbstractTableModel {
     private final int columnCount;
     private final List<Object[]> data = new ArrayList<>();
     private final String[] columnNames;
 
-    public AthleteModel(List<AthleteDTO> athletes) {
-        this.columnNames = new String[]{"Ид", "Име", "Фамилия", "Националност", "Позиция", "Цена", "Дата на раждане", "ИД на Екип", "Екип"};
+    public MatchModel(List<MatchDTO> matches) {
+        this.columnNames = new String[]{
+                "Мач Ид", "Домакин Ид", "Гост Ид", "Домакин", "Гост", "Голове на домакина", "Голове на госта"};
         this.columnCount = columnNames.length;
 
-        for (AthleteDTO athlete : athletes) {
+        for (MatchDTO match : matches) {
             Object[] row = {
-                athlete.getAthleteId(),
-                athlete.getFirstName(),
-                athlete.getLastName(),
-                athlete.getNationality(),
-                athlete.getPosition(),
-                athlete.getPrice(),
-                athlete.getDateBorn(),
-                athlete.getTeamId(),
-                athlete.getTeamName(),
+                match.getMatchId(),
+                match.getHomeTeamId(),
+                match.getAwayTeamId(),
+                match.getHomeTeamName(),
+                match.getAwayTeamName(),
+                match.getHomeTeamGoals(),
+                match.getAwayTeamGoals()
             };
 
             data.add(row);

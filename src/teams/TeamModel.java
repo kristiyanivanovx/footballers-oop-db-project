@@ -10,7 +10,7 @@ public class TeamModel extends AbstractTableModel {
     private final String[] columnNames;
 
     public TeamModel(List<TeamDTO> teams) {
-        this.columnNames = new String[] { "Ид", "Име", "Дата на основаване", "Приходи" };
+        this.columnNames = new String[]{"Ид", "Име", "Дата на основаване", "Приходи"};
         this.columnCount = columnNames.length;
 
         for (TeamDTO team : teams) {

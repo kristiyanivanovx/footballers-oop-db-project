@@ -1,5 +1,6 @@
 package athletes;
 
+import common.Utils;
 import teams.TeamDAO;
 import teams.TeamDTO;
 
@@ -7,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 import java.util.List;
 
 public class AthletePanel extends JPanel {
@@ -30,6 +30,7 @@ public class AthletePanel extends JPanel {
     private final JTextField searchNameField = new JTextField();
     private final JTextField searchTeamField = new JTextField();
 
+    private final Utils utils = new Utils();
     private int teamId;
 
     public AthletePanel(JPanel searchPanel) {
@@ -44,8 +45,8 @@ public class AthletePanel extends JPanel {
         List<AthleteDTO> athletes = athleteDAO.searchAthletesByNameAndTeam(athleteName, teamName);
         athletesSearchTable.setModel(new AthleteModel(athletes));
 
-        hideColumnOfTableByIndex(athletesSearchTable, 0);
-        hideColumnOfTableByIndex(athletesSearchTable, 7);
+        utils.hideColumnOfTableByIndex(athletesSearchTable, 0);
+        utils.hideColumnOfTableByIndex(athletesSearchTable, 7);
     }
 
     private JPanel createSearchInputPanel() {
@@ -71,7 +72,7 @@ public class AthletePanel extends JPanel {
         gbc.weighty = 0.1;
         panel.add(searchInputPanel, gbc);
 
-        JPanel searchButtonPanel =  new JPanel();
+        JPanel searchButtonPanel = new JPanel();
         searchButtonPanel.setBorder(BorderFactory.createTitledBorder("Действия"));
 
         JButton searchButton = new JButton("Търси");
@@ -176,7 +177,7 @@ public class AthletePanel extends JPanel {
     }
 
     private void addAthlete() {
-        String selectedTeamName = (String) teamNameComboBox.getSelectedItem();
+        String selectedTeamName = teamNameComboBox.getSelectedItem().toString();
         int teamId = athleteDAO.getTeamId(selectedTeamName);
 
         AthleteDTO athlete = new AthleteDTO(
@@ -230,8 +231,8 @@ public class AthletePanel extends JPanel {
         List<AthleteDTO> athletes = athleteDAO.getAllAthletes();
 
         athletesTable.setModel(new AthleteModel(athletes));
-        hideColumnOfTableByIndex(athletesTable, 0);
-        hideColumnOfTableByIndex(athletesTable, 7);
+        utils.hideColumnOfTableByIndex(athletesTable, 0);
+        utils.hideColumnOfTableByIndex(athletesTable, 7);
     }
 
     public void refreshTeamComboBox() {
@@ -254,11 +255,6 @@ public class AthletePanel extends JPanel {
         bornYearField.setText("");
     }
 
-    private void hideColumnOfTableByIndex(JTable table, int columnIndex) {
-        table.getColumnModel().getColumn(columnIndex).setMinWidth(0);
-        table.getColumnModel().getColumn(columnIndex).setMaxWidth(0);
-        table.getColumnModel().getColumn(columnIndex).setWidth(0);
-    }
 
     class MouseActionAthleteTable implements MouseListener {
         @Override
@@ -272,23 +268,25 @@ public class AthletePanel extends JPanel {
             positionField.setText(athletesTable.getValueAt(row, 4).toString());
             priceField.setText(athletesTable.getValueAt(row, 5).toString());
             bornYearField.setText(athletesTable.getValueAt(row, 6).toString());
-//            teamId = Integer.parseInt(athletesTable.getValueAt(row, 7).toString());
-//            teamField.setText(athletesTable.getValueAt(row, 7).toString());
             String teamName = athletesTable.getValueAt(row, 8).toString();
             teamNameComboBox.setSelectedItem(teamName);
             teamId = athleteDAO.getTeamId(teamName);
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) { }
+        public void mouseEntered(MouseEvent e) {
+        }
 
         @Override
-        public void mouseExited(MouseEvent e) { }
+        public void mouseExited(MouseEvent e) {
+        }
 
         @Override
-        public void mousePressed(MouseEvent e) { }
+        public void mousePressed(MouseEvent e) {
+        }
 
         @Override
-        public void mouseReleased(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) {
+        }
     }
 }

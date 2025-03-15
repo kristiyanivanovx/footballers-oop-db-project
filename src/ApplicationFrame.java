@@ -1,5 +1,5 @@
-
 import athletes.AthletePanel;
+import matches.MatchPanel;
 import teams.TeamPanel;
 
 import javax.swing.*;
@@ -26,7 +26,7 @@ public class ApplicationFrame extends JFrame {
         JPanel searchPanel = new JPanel(new GridBagLayout());
         AthletePanel athletesPanel = new AthletePanel(searchPanel);
         TeamPanel teamsPanel = new TeamPanel(athletesPanel);
-        JPanel matchesPanel = new JPanel();
+        MatchPanel matchesPanel = new MatchPanel();
 
         tabs.add(athletesPanel, "Атлети");
         tabs.add(searchPanel, "Търсене");

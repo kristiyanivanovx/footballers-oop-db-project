@@ -20,8 +20,7 @@ public class AthleteDTO {
             double price,
             String dateBorn,
             int teamId,
-            String teamName)
-    {
+            String teamName) {
         this.athleteId = athleteId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,13 +32,39 @@ public class AthleteDTO {
         this.teamName = teamName;
     }
 
-    public int getAthleteId() { return athleteId; }
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public String getNationality() { return nationality; }
-    public String getPosition() { return position; }
-    public double getPrice() { return price; }
-    public String getDateBorn() { return dateBorn; }
-    public int getTeamId() { return teamId; }
-    public String getTeamName() { return teamName; }
+    public int getAthleteId() {
+        return athleteId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getDateBorn() {
+        return dateBorn;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
 }

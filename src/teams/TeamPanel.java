@@ -1,10 +1,10 @@
 package teams;
 
 import athletes.AthletePanel;
+import common.Utils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 import java.util.List;
 
 public class TeamPanel extends JPanel {
@@ -16,6 +16,7 @@ public class TeamPanel extends JPanel {
     private final JTextField nameField = new JTextField();
     private final JTextField dateFoundField = new JTextField();
     private final JTextField earningsField = new JTextField();
+    private final Utils utils = new Utils();
 
     public TeamPanel(AthletePanel athletePanel) {
         this.athletePanel = athletePanel;
@@ -84,12 +85,7 @@ public class TeamPanel extends JPanel {
     }
 
     private void addTeam() {
-        TeamDTO team = new TeamDTO(
-            0,
-            nameField.getText(),
-            dateFoundField.getText(),
-            Double.parseDouble(earningsField.getText())
-        );
+        TeamDTO team = new TeamDTO(0, nameField.getText(), dateFoundField.getText(), Double.parseDouble(earningsField.getText()));
 
         teamDAO.addTeam(team);
         refreshTeamsTable();
@@ -98,12 +94,7 @@ public class TeamPanel extends JPanel {
     }
 
     private void updateTeam() {
-        TeamDTO team = new TeamDTO(
-            Integer.parseInt(teamIdField.getText()),
-            nameField.getText(),
-            dateFoundField.getText(),
-            Double.parseDouble(earningsField.getText())
-        );
+        TeamDTO team = new TeamDTO(Integer.parseInt(teamIdField.getText()), nameField.getText(), dateFoundField.getText(), Double.parseDouble(earningsField.getText()));
 
         teamDAO.updateTeam(team);
         refreshTeamsTable();
@@ -121,13 +112,7 @@ public class TeamPanel extends JPanel {
     private void refreshTeamsTable() {
         List<TeamDTO> teams = teamDAO.getAllTeams();
         teamsTable.setModel(new TeamModel(teams));
-        hideColumnOfTableByIndex(teamsTable, 0);
-    }
-
-    private void hideColumnOfTableByIndex(JTable table, int columnIndex) {
-        table.getColumnModel().getColumn(columnIndex).setMinWidth(0);
-        table.getColumnModel().getColumn(columnIndex).setMaxWidth(0);
-        table.getColumnModel().getColumn(columnIndex).setWidth(0);
+        utils.hideColumnOfTableByIndex(teamsTable, 0);
     }
 
     private void resetFields() {
@@ -148,15 +133,19 @@ public class TeamPanel extends JPanel {
         }
 
         @Override
-        public void mouseEntered(java.awt.event.MouseEvent e) { }
+        public void mouseEntered(java.awt.event.MouseEvent e) {
+        }
 
         @Override
-        public void mouseExited(java.awt.event.MouseEvent e) { }
+        public void mouseExited(java.awt.event.MouseEvent e) {
+        }
 
         @Override
-        public void mousePressed(java.awt.event.MouseEvent e) { }
+        public void mousePressed(java.awt.event.MouseEvent e) {
+        }
 
         @Override
-        public void mouseReleased(java.awt.event.MouseEvent e) { }
+        public void mouseReleased(java.awt.event.MouseEvent e) {
+        }
     }
 }
