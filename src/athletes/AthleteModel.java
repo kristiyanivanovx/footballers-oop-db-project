@@ -2,7 +2,6 @@ package athletes;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.sql.SQLException;
 import java.util.List;
 
 public class AthleteModel extends AbstractTableModel {

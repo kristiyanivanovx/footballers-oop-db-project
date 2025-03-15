@@ -24,8 +24,8 @@ public class ApplicationFrame extends JFrame {
         JTabbedPane tabs = new JTabbedPane();
 
         JPanel searchPanel = new JPanel(new GridBagLayout());
-        JPanel athletesPanel = new AthletePanel(searchPanel);
-        JPanel teamsPanel = new TeamPanel();
+        AthletePanel athletesPanel = new AthletePanel(searchPanel);
+        TeamPanel teamsPanel = new TeamPanel(athletesPanel);
         JPanel matchesPanel = new JPanel();
 
         tabs.add(athletesPanel, "Атлети");

@@ -1,5 +1,8 @@
 package athletes;
 
+import teams.TeamDAO;
+import teams.TeamDTO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -17,7 +20,6 @@ public class AthletePanel extends JPanel {
     private final JTextField positionField = new JTextField();
     private final JTextField priceField = new JTextField();
     private final JTextField bornYearField = new JTextField();
-    private final JTextField teamField = new JTextField();
     private final JComboBox<String> teamNameComboBox = new JComboBox<>();
 
     // Athletes - List All
@@ -47,7 +49,7 @@ public class AthletePanel extends JPanel {
     }
 
     private JPanel createSearchInputPanel() {
-        JPanel panel = new JPanel(new GridLayout(3, 2));
+        JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Търсене на атлети по име и екип"));
 
         panel.add(new JLabel("Име на атлет:"));
@@ -66,7 +68,7 @@ public class AthletePanel extends JPanel {
 
         JPanel searchInputPanel = createSearchInputPanel();
         gbc.gridy = 0;
-        gbc.weighty = 0.2;
+        gbc.weighty = 0.1;
         panel.add(searchInputPanel, gbc);
 
         JPanel searchButtonPanel =  new JPanel();
@@ -87,7 +89,7 @@ public class AthletePanel extends JPanel {
         searchResultPanel.add(searchScroll);
 
         gbc.gridy = 2;
-        gbc.weighty = 0.7;
+        gbc.weighty = 0.8;
         panel.add(searchResultPanel, gbc);
     }
 
@@ -148,7 +150,6 @@ public class AthletePanel extends JPanel {
         panel.add(bornYearField);
 
         panel.add(new JLabel("Екип:"));
-//        panel.add(teamField);
         panel.add(teamNameComboBox);
 
         return panel;
@@ -174,6 +175,9 @@ public class AthletePanel extends JPanel {
     }
 
     private void addAthlete() {
+        String selectedTeamName = (String) teamNameComboBox.getSelectedItem();
+        int teamId = athleteDAO.getTeamId(selectedTeamName);
+
         AthleteDTO athlete = new AthleteDTO(
             0,
             firstNameField.getText(),
@@ -182,8 +186,8 @@ public class AthletePanel extends JPanel {
             positionField.getText(),
             Double.parseDouble(priceField.getText()),
             bornYearField.getText(),
-            Integer.parseInt(teamField.getText()),
-            ""
+            teamId,
+            selectedTeamName
         );
 
         athleteDAO.addAthlete(athlete);
@@ -193,6 +197,9 @@ public class AthletePanel extends JPanel {
     }
 
     private void updateAthlete() {
+        String selectedTeamName = teamNameComboBox.getSelectedItem().toString();
+        int teamId = athleteDAO.getTeamId(selectedTeamName);
+
         AthleteDTO athlete = new AthleteDTO(
             Integer.parseInt(athleteIdTextField.getText()),
             firstNameField.getText(),
@@ -201,8 +208,8 @@ public class AthletePanel extends JPanel {
             positionField.getText(),
             Double.parseDouble(priceField.getText()),
             bornYearField.getText(),
-            Integer.parseInt(teamField.getText()),
-            ""
+            teamId,
+            selectedTeamName
         );
 
         athleteDAO.updateAthlete(athlete);
@@ -224,18 +231,16 @@ public class AthletePanel extends JPanel {
         athletesTable.setModel(new AthleteModel(athletes));
         hideColumnOfTableByIndex(athletesTable, 0);
         hideColumnOfTableByIndex(athletesTable, 7);
-
-        athletesSearchTable.setModel(new AthleteModel(athletes));
-
-        hideColumnOfTableByIndex(athletesSearchTable, 0);
-        hideColumnOfTableByIndex(athletesSearchTable, 7);
     }
 
-    private void refreshTeamComboBox() {
-        teamId = -1;
+    public void refreshTeamComboBox() {
         teamNameComboBox.removeAllItems();
+        TeamDAO teamDAO = new TeamDAO();
+        List<TeamDTO> teams = teamDAO.getAllTeams();
 
-        teamId = athleteDAO.getTeams(teamNameComboBox);
+        for (TeamDTO team : teams) {
+            teamNameComboBox.addItem(team.getName());
+        }
     }
 
     private void resetAthleteFields() {
@@ -246,7 +251,6 @@ public class AthletePanel extends JPanel {
         positionField.setText("");
         priceField.setText("");
         bornYearField.setText("");
-        teamField.setText("");
     }
 
     private void hideColumnOfTableByIndex(JTable table, int columnIndex) {
@@ -267,8 +271,11 @@ public class AthletePanel extends JPanel {
             positionField.setText(athletesTable.getValueAt(row, 4).toString());
             priceField.setText(athletesTable.getValueAt(row, 5).toString());
             bornYearField.setText(athletesTable.getValueAt(row, 6).toString());
-            teamField.setText(athletesTable.getValueAt(row, 7).toString());
-            teamId = Integer.parseInt(athletesTable.getValueAt(row, 8).toString());
+//            teamId = Integer.parseInt(athletesTable.getValueAt(row, 7).toString());
+//            teamField.setText(athletesTable.getValueAt(row, 7).toString());
+            String teamName = athletesTable.getValueAt(row, 8).toString();
+            teamNameComboBox.setSelectedItem(teamName);
+            teamId = athleteDAO.getTeamId(teamName);
         }
 
         @Override

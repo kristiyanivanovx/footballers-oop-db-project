@@ -2,7 +2,6 @@ package athletes;
 
 import database.DatabaseConnection;
 
-import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,38 +80,20 @@ public class AthleteDAO {
         String sql = "DELETE FROM Athletes WHERE AthleteId=?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, athleteId);
-
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public int getTeams(JComboBox<String> comboBox) {
-        String sql = "SELECT TeamId, Name FROM Teams";
-//        String item = "";
-        int teamId = -1;
-
-        try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
-            if (resultSet.next()) {
-                teamId = Integer.parseInt(resultSet.getObject(1).toString());
-                do {
-                    String item = resultSet.getObject(2).toString();
-                    comboBox.addItem(item);
-                } while(resultSet.next());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return teamId;
-    }
-
     public int getTeamId(String teamName) {
         String sql = "SELECT * FROM Teams WHERE Name =?";
         int teamId = -1;
 
-        try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, teamName);
+            ResultSet resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
                 teamId = Integer.parseInt(resultSet.getObject(1).toString());
             }

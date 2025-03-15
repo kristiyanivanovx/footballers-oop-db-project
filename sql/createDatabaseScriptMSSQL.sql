@@ -1,4 +1,8 @@
 -- MSSQL: CREATE DATABASE fbDB;
+CREATE DATABASE fbDB;
+GO
+USE fbDB;
+GO
 
 CREATE TABLE Teams
 (
@@ -6,15 +10,6 @@ CREATE TABLE Teams
     [Name] VARCHAR(30),
     DateFound DATE,
     Earnings DECIMAL(15, 2)
-)
-
-CREATE TABLE Matches
-(
-    MatchId INT IDENTITY PRIMARY KEY,
-    HomeTeamId INT FOREIGN KEY REFERENCES Teams(TeamId),
-    AwayTeamId INT FOREIGN KEY REFERENCES Teams(TeamId),
-    HomeTeamGoals INT,
-    AwayTeamGoals INT,
 )
 
 CREATE TABLE Athletes
@@ -26,5 +21,13 @@ CREATE TABLE Athletes
     Position VARCHAR(15),
     Price DECIMAL (15, 2),
     DateBorn DATE,
-    TeamId INT FOREIGN KEY REFERENCES Teams(TeamId),
+    TeamId INT FOREIGN KEY REFERENCES Teams(TeamId) ON DELETE CASCADE ON UPDATE CASCADE
+)
+CREATE TABLE Matches
+(
+    MatchId INT IDENTITY PRIMARY KEY,
+    HomeTeamId INT FOREIGN KEY REFERENCES Teams(TeamId) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    AwayTeamId INT FOREIGN KEY REFERENCES Teams(TeamId) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    HomeTeamGoals INT,
+    AwayTeamGoals INT,
 )
