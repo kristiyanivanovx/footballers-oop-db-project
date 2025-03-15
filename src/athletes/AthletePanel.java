@@ -120,8 +120,9 @@ public class AthletePanel extends JPanel {
 
         athletesTable.addMouseListener(new MouseActionAthleteTable());
         teamNameComboBox.addActionListener(e -> {
-            if (teamId > 0) {
-                String teamName = teamNameComboBox.getSelectedItem().toString();
+            Object selectedItem = teamNameComboBox.getSelectedItem();
+            if (selectedItem != null) {
+                String teamName = selectedItem.toString();
                 teamId = athleteDAO.getTeamId(teamName);
             }
         });
