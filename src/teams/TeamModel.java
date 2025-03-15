@@ -1,31 +1,24 @@
-package athletes;
+package teams;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.sql.SQLException;
 import java.util.List;
 
-public class AthleteModel extends AbstractTableModel {
+public class TeamModel extends AbstractTableModel {
     private final int columnCount;
     private final List<Object[]> data = new ArrayList<>();
     private final String[] columnNames;
 
-    public AthleteModel(List<AthleteDTO> athletes) {
-        this.columnNames = new String[]
-                { "Ид", "Име", "Фамилия", "Националност", "Позиция", "Цена", "Дата на раждане", "ИД на Екип", "Екип" };
+    public TeamModel(List<TeamDTO> teams) {
+        this.columnNames = new String[] { "Ид", "Име", "Дата на основаване", "Приходи" };
         this.columnCount = columnNames.length;
 
-        for (AthleteDTO athlete : athletes) {
+        for (TeamDTO team : teams) {
             Object[] row = {
-                athlete.getAthleteId(),
-                athlete.getFirstName(),
-                athlete.getLastName(),
-                athlete.getNationality(),
-                athlete.getPosition(),
-                athlete.getPrice(),
-                athlete.getDateBorn(),
-                athlete.getTeamId(),
-                athlete.getTeamName(),
+                team.getTeamId(),
+                team.getName(),
+                team.getDateFound(),
+                team.getEarnings()
             };
 
             data.add(row);
