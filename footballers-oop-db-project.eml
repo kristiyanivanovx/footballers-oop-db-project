@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component inherit-compiler-output="true" inheritJdk="true">
+<component inherit-compiler-output="true" jdk="JavaSE-20" jdk_type="JavaSDK">
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$"/>
-	<levels>
-		<level name="mssql-jdbc-12.8.1.jre11" value="project"/>
-		<level name="KotlinJavaRuntime" value="project"/>
-	</levels>
+	<lib name="mssql-jdbc-12.8.1.jre11.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/driver/mssql-jdbc-12.8.1.jre11.jar!/"/>
+	</lib>
 </component>
